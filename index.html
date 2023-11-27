@@ -14,12 +14,12 @@
         <div class="form">
             <p>Welcome back 👋</p>
             <h1>Sign up to your account</h1>
-            <form>
+            <form id="signUpForm">
                 <label for="name">Your name</label>
                 <input type="text" name="name" id="name" />
 
                 <label for="email">Your email</label>
-                <input type="text" name="email" id="email" />
+                <input type="email" id="email" required/>
 
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" />
@@ -27,8 +27,8 @@
                 <label for="confirmPassword">Confirm Password</label>
                 <input type="password" name="confirmPassword" id="confirmPassword"/>
 
-                <button id="submitBtn">CONTINUE</button>
-            </form=>
+                <button type="submit" id="submitBtn">CONTINUE</button>
+            </form>
             <div class="warning">
                 <!-- using js -->
                 <!-- Error: All fields are mandatory! -->

@@ -1,6 +1,13 @@
-const submitBtn = document.getElementById("submitBtn");
+// if user is trying to acces the signup page but the user is logged in
+if (window.location.pathname == "/index.html" && localStorage.getItem("userData")) {
+  window.location.href = "./Profile.html";
+}
 
-submitBtn.addEventListener("click", (e) => {
+// const submitBtn = document.getElementById("submitBtn");
+let form = document.getElementById("signUpForm");
+const warningMsg = document.querySelector(".warning");
+
+form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const name = document.getElementById("name").value;
@@ -9,19 +16,19 @@ submitBtn.addEventListener("click", (e) => {
   const confirmPassword = document.getElementById("confirmPassword").value;
 
   if (!name || !email || !password || !confirmPassword) {
-    document.querySelector(".warning").innerText =
-      "Error: All fields are mandatory!";
+    warningMsg.style.color = "#564FF2";
+    warningMsg.innerText = "Error: All fields are mandatory!";
     return;
   }
   if (password !== confirmPassword) {
     console.log("password not matched");
-    document.querySelector(".warning").innerText = "*Password should match!";
-    document.querySelector(".warning").style.color = "red";
+    warningMsg.innerText = "*Password should match!";
+    warningMsg.style.color = "red";
     return;
   } else console.log("password matched");
 
   const token = generateAccessToken();
-  console.log('token no: ' + token);
+  console.log("token no: " + token);
 
   // Store user details in local storage
   let userData = {
@@ -34,15 +41,19 @@ submitBtn.addEventListener("click", (e) => {
   localStorage.setItem("userData", JSON.stringify(userData));
   console.log(`user Data : ${userData}`);
 
-//   redirect to page after few seconds
+  // redirect to page after few seconds
+  warningMsg.innerText = "Redirecting to login page...";
+  warningMsg.style.color = "lightgreen";
+
   setTimeout(function () {
-    window.location.href = './Profile.html';
+    window.location.href = "./Profile.html";
   }, 1000);
 });
 
 // token generation fn
-function generateAccessToken(){
-    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+function generateAccessToken() {
+  const charset =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   const tokenArray = [];
 
   for (let i = 0; i < 16; i++) {
@@ -52,11 +63,3 @@ function generateAccessToken(){
 
   return tokenArray.join("");
 }
-    window.onload = function () {
-        // This function will be executed after the page has loaded
-        // alert("on signUp page")
-        if (localStorage.getItem("userData")) {
-          window.location.href = "./Profile.html";
-          alert("Already Loggedin");
-        }
-    };
